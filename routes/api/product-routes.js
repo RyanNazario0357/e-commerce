@@ -48,3 +48,26 @@ router.get('/', async (req, res) => {
         res.status(400).json(err);
       });
   });
+
+  router.put('/:id', (req, res) => {
+    Product.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then((product) => {
+        return ProductTag.findAll({ where: { product_id: req.params.id } });
+      })
+      .then((productTags) => {
+        const productTagIds = productTags.map(({ tag_id }) => tag_id);
+        const newProductTags = req.body.tagIds
+          .filter((tag_id) => !productTagIds.includes(tag_id))
+          .map((tag_id) => {
+            return {
+              product_id: req.params.id,
+              tag_id,
+            };
+          });
+        const productTagsToRemove = productTags
+          .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
+          .map(({ id }) => id);
