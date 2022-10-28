@@ -1,5 +1,5 @@
 {
-    "name": "E-Commerce",
+    "name": "e-commerce",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
@@ -14,7 +14,7 @@
         "url": "https://github.com/RyanNazario0357/e-commerce"
     },
     "keywords": [],
-    "author": {},
+    "Author": {},
     "license": "ISC",
     "devDependencies": {
         "nodemon": "^2.0.3"
