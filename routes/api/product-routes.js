@@ -71,3 +71,16 @@ router.get('/', async (req, res) => {
         const productTagsToRemove = productTags
           .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
           .map(({ id }) => id);
+
+          return Promise.all([
+            ProductTag.destroy({ where: { id: productTagsToRemove } }),
+            ProductTag.bulkCreate(newProductTags),
+          ]);
+        })
+        .then((updatedProductTags) => res.json(updatedProductTags))
+        .catch((err) => {
+          // console.log(err);
+          res.status(400).json(err);
+        });
+    });
+    
